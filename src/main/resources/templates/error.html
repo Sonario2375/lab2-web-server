@@ -52,19 +52,18 @@
 <body>
     <div class="error-container">
         <!-- Título principal -->
-        <h1>Oops! Something went wrong</h1>
-        <p>An unexpected error has occurred while processing your request.</p>
+        <h1>Oops! Algo ha ido mal</h1>
+        <p>Ha habido un error al procesar tu petición.</p>
 
         <!-- Step further: Muestra status y path recuperados del modelo de Spring -->
         <div class="error-details">
             <p><strong>Status:</strong> <span th:text="${status}">404</span></p>
-            <p><strong>Error:</strong> <span th:text="${error}">Not Found</span></p>
-            <p><strong>Path:</strong> <span th:text="${path}">/unknown</span></p>
+            <p><strong>Path:</strong> <span th:text="${path}">/desconocido</span></p>
         </div>
 
-        <!-- Marcador para el test de JUnit (ErrorPageTest) -->
+        <!-- Marcador para el test-->
         <div class="marker">
-            Custom Error Page Marker
+            Mi marcador
         </div>
     </div>
 </body>

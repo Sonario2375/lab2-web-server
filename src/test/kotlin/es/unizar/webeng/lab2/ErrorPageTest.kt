@@ -15,14 +15,9 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 
-/**
- * Pruebas de integración para verificar el correcto renderizado de la página
- * de error personalizada [error.html] cuando se consulta una ruta inexistente.
- */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate
 class ErrorPageTest {
-
     @LocalServerPort
     private var port: Int = 0
 
@@ -34,23 +29,19 @@ class ErrorPageTest {
         val headers = HttpHeaders()
         headers.accept = listOf(MediaType.TEXT_HTML)
 
-        val response = client.exchange(
-            "http://127.0.0.1:$port/missing",
-            HttpMethod.GET,
-            HttpEntity<Void>(headers),
-            String::class.java,
-        )
+        val response =
+            client.exchange(
+                "http://127.0.0.1:$port/missing",
+                HttpMethod.GET,
+                HttpEntity<Any>(headers),
+                String::class.java,
+            )
 
-        // 1. Verifica que el estado HTTP sea 404 Not Found
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+        assertTrue(response.body!!.contains("Mi marcador"))
 
-        val body = response.body ?: ""
-
-        // 2. Verifica el marcador de tu HTML (reemplaza "your marker")
-        assertTrue(body.contains("Custom Error Page Marker"))
-
-        // 3. Step further: Comprueba que el status (404) y el path (/missing) están en el HTML
-        assertTrue(body.contains("404"))
-        assertTrue(body.contains("/missing"))
+        // Comprobaciones de " a step further"
+        assertTrue(response.body!!.contains("404"))
+        assertTrue(response.body!!.contains("/missing"))
     }
 }
